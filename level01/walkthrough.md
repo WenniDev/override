@@ -67,5 +67,5 @@ nope, incorrect password...
 
 whoami
 level02
-cat ../level02/.pass
+cat /home/users/level02/.pass
 ```

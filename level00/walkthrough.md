@@ -29,5 +29,5 @@ Password:5276
 Authenticated!
 $ whoami
 level01
-$ cat ../level01/.pass
+$ cat home/users/level01/.pass
 ```
