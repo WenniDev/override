@@ -6,7 +6,7 @@ We have to enter a login string and a serial number. If a series of complicated 
 
 ## the hack
 
-the code was copied/pasted into another program and printf added in order to print the computed value to whom serial will be compared.
+the code was copied/pasted into another program on our local computer and printf added in order to print the computed value to whom serial will be compared.
 Entering a login (rototo) print the expected serial (6232795).
 We just have to enter those values in the real level07 program.
 

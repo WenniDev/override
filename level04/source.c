@@ -1,9 +1,11 @@
 #include <signal.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/ptrace.h>
 #include <sys/prctl.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 int clear_stdin()
 {
@@ -38,13 +40,8 @@ int main(int argc, const char **argv, const char **envp)
         while (data != 11)
         {
             wait(&status);
-            /*
-            **reads the 7 low value bits (ascii code)
-            ** 0        Successful completion.
-            ** 1-126    An error occurred.
-            ** 127      A specified pid or job-id has terminated or is unknown by the invoking shell
-            */
-            if ((status & 0x7F) == 0 || (status & 0x7F) == 127)
+
+            if (WTERMSIG(status) == 0 || WIFSIGNALED(status))
             {
                 puts("child is exiting...");
                 return 0;

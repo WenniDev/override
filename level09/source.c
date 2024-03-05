@@ -28,26 +28,26 @@ int handle_msg()
 
 char *set_msg(message_t *p_msg)
 {
-  char s[1024];
+  char buffer[1024];
 
-  memset(s, 0, sizeof(s));
+  memset(buffer, 0, sizeof(buffer));
   puts(">: Msg @Unix-Dude");
   printf(">>: ");
-  fgets(s, 1024, stdin);
-  return strncpy(p_msg->message, s, p_msg->msg_len);
+  fgets(buffer, 1024, stdin);
+  return strncpy(p_msg->message, buffer, p_msg->msg_len);
 }
 
 int set_username(message_t *p_msg)
 {
-  char s[140];
+  char buffer[140];
   int i;
 
-  memset(s, 0, 128);
+  memset(buffer, 0, 128);
   puts(">: Enter your username");
   printf(">>: ");
-  fgets(s, 128, stdin);
-  for (i = 0; i <= 40 && s[i]; ++i)
-    p_msg->name[i] = s[i];
+  fgets(buffer, 128, stdin);
+  for (i = 0; i <= 40 && buffer[i]; ++i)
+    p_msg->name[i] = buffer[i];
   return printf(">: Welcome, %s", p_msg->name);
 }
 
