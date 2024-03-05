@@ -1,20 +1,27 @@
 # Level08
 
-On a un fichier qui crée un backup que l'on peut lire du fichier qu'on lui passe en argument.
+We have a program that creates a backup of the file we pass it as an argument in the ./backup folder. We have permissions to read this backup.
 
-L'objectif va etre de lui passer en argument le chemin du .pass de level09 mais nous rencontrons un soucis:
+The aim is to pass it the path to level09's .pass as an argument, in order to read its contents, but we've run into a problem:
 
 ```c
 $ ./level08 /home/users/level09/.pass
 ERROR: Failed to open ./backups//home/users/level09/.pass
 ```
-Pour regler ca il faudrait creer les dossiers /home/users/level09/ dans le dossier backup mais nous n'avons pas les permissions...
+Here, we understand that the program simply concatenates two strings: "./backup" + argument. And the backup folder does not contain the /home/users folders...
 
-Manque de bol, le dossier backup est tout le temps accede via un chemin relatif qui depend du repertoire dans lequel on execute le programme.
+To fix this, we'd have to create them in the backup folder, but we don't have the permissions...
+```sh
+$ mkdir -p ./backups/home/users/level09
+mkdir: cannot create directory `./backups/home': Permission denied
+```
+Unfortunately, the backup folder is always accessed via a relative path which depends on the directory in which the program is run.
 
-Il suffit de se deplacer dans /tmp/ pour creer notre propre structure de dossier. 
+All you have to do is move to /tmp/ to create your own folder structure.
 
-level08@OverRide:/tmp$ cd /tmp/
-level08@OverRide:/tmp$ mkdir -p backups/home/users/level09
-level08@OverRide:/tmp$ ~/level08 /home/users/level09/.pass
-level08@OverRide:/tmp$ cat backups/home/users/level09/.pass 
+```sh
+$ cd /tmp/
+$ mkdir -p backups/home/users/level09
+$ ~/level08 /home/users/level09/.pass
+$ cat backups/home/users/level09/.pass
+```
