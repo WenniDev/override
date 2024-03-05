@@ -1,7 +1,12 @@
+#include <signal.h>
+#include <stdio.h>
 #include <unistd.h>
+#include <sys/ptrace.h>
 #include <sys/prctl.h>
+#include <sys/types.h>
+//#include <sched.h>  //vs code bug
 
-// Function declarations
+
 
 int clear_stdin();
 int get_unum();
@@ -9,84 +14,66 @@ void prog_timeout(int a1);
 unsigned int enable_timeout_cons();
 void term_proc();
 
-//----- (08048634) --------------------------------------------------------
 int clear_stdin()
 {
-    char result;
+    char result = 0;
 
-    do
-        result = getchar();
     while (result != '\n' && result != 255);
+        result = getchar();
     return result;
 }
 
-//----- (08048657) --------------------------------------------------------
 int get_unum()
 {
-    int v1[3]; // [esp+1Ch] [ebp-Ch] BYREF
+    unsigned int    nb = 0;
 
-    v1[0] = 0;
     fflush(stdout);
-    scanf("%u", v1);
+    scanf("%u", nb);
     clear_stdin();
-    return v1[0];
+    return nb;
 }
-// 8048560: using guessed type int __cdecl __isoc99_scanf(_DWORD, _DWORD);
-// 8048657: using guessed type int var_C[3];
 
-//----- (0804868F) --------------------------------------------------------
 void prog_timeout(int a1)
 {
     sys_exit(1);
 }
 
-//----- (080486A0) --------------------------------------------------------
 unsigned int enable_timeout_cons()
 {
-    signal(14, (__sighandler_t)prog_timeout);
-    return alarm(0x3Cu);
+    signal(14, prog_timeout);
+    return alarm(60);
 }
 
-//----- (080486C8) --------------------------------------------------------
 int main(int argc, const char **argv, const char **envp)
 {
-    int stat_loc; // [esp+1Ch] [ebp-9Ch] BYREF
+    int status; // [esp+1Ch] [ebp-9Ch] BYREF
     char s[128];  // [esp+20h] [ebp-98h] BYREF
-    int v6;       // [esp+A0h] [ebp-18h]
-    int v7;       // [esp+A4h] [ebp-14h]
-    int v8;       // [esp+A8h] [ebp-10h]
-    pid_t v9;     // [esp+ACh] [ebp-Ch]
+   
+    int data;       // [esp+A8h] [ebp-10h]
+    pid_t son;     // [esp+ACh] [ebp-Ch]
 
-    v9 = fork();
+    son = fork();
     memset(s, 0, sizeof(s));
-    v8 = 0;
-    stat_loc = 0;
-    if (v9) // father
+    data = 0;
+    status = 0;
+    if (son) // I'm your father
     {
-        while (v8 != 11)
+        while (data != 11)
         {
-            wait(&stat_loc);
-            v6 = stat_loc;
-            if ((stat_loc & 0x7F) == 0 || (v7 = stat_loc, (char)((stat_loc & 0x7F) + 1) >> 1 > 0))
+            wait(&status);
+
+            //reads the 7 low value bits (ascii code)
+            if ((status & 0x7F) == 0 || (char)((status & 0x7F) + 1) >> 1 > 0)
             {
                 puts("child is exiting...");
                 return 0;
             }
-            /*
-            ** PTRACE_PEEKUSER
-            ** Read a word at offset addr in the tracee's USER area,
-            ** which holds the registers and other information about the
-            ** process (see <sys/user.h>).  The word is returned as the
-            ** result of the ptrace() call.  Typically, the offset must
-            ** be word-aligned, though this might vary by architecture.
-            ** See NOTES.  (data is ignored; but see NOTES.)
-            */
 
-            v8 = ptrace(PTRACE_PEEKUSER, v9, 44, 0);
+            data = ptrace(PTRACE_PEEKUSER, son, 44, 0);
         }
 
         puts("no exec() for you");
-        kill(v9, 9);
+        kill(son, SIGKILL);
     }
     else // son
     {
