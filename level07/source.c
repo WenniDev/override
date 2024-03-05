@@ -63,7 +63,7 @@ int read_number(char *storage)
 int main(int argc, char **argv, char **envp)
 {
   char command[20] = {0};
-  int error = 0;
+  int status = 0;
   char storage[100];
 
   memset(command, 0, 100);
@@ -81,23 +81,23 @@ int main(int argc, char **argv, char **envp)
   while (true)
   {
     printf("Input command: ");
-    error = 1;
+    status = 1;
     fgets(command, 20, stdin);
 
     if (strncmp(command, "store", 5) == 0)
     {
-      error = store_number(storage);
+      status = store_number(storage);
     }
     else if (strncmp(command, "read", 4) == 0)
     {
-      error = read_number(storage);
+      status = read_number(storage);
     }
     else if (strncmp(command, "quit", 4) == 0)
     {
       return 0;
     }
 
-    if (error == 0)
+    if (status == 0)
     {
       printf(" Completed %s command successfully\n", command);
     }

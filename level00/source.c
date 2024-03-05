@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
   int result;
   int password;
 
@@ -9,11 +10,14 @@ int main(void) {
   puts("***********************************");
   printf("Password:");
   scanf("%d", &password);
-  if (password == 5276) {
+  if (password == 5276)
+  {
     puts("\nAuthenticated!");
     system("/bin/sh");
     result = 0;
-  } else {
+  }
+  else
+  {
     puts("\nInvalid Password!");
     result = 1;
   }

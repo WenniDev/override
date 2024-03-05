@@ -1,11 +1,13 @@
+#include <sys/ptrace.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
 
-
-//----- (08048748) --------------------------------------------------------
-_BOOL4 auth(char *login, int serial)
+int auth(char *login, int serial)
 {
-    int i;         // [esp+14h] [ebp-14h]
-    int computed;  // [esp+18h] [ebp-10h]
-    int login_len; // [esp+1Ch] [ebp-Ch]
+    int i;
+    int computed;
+    int login_len;
 
     login[strcspn(login, "\n")] = 0;
     login_len = strnlen(login, 32);
@@ -33,11 +35,9 @@ _BOOL4 auth(char *login, int serial)
 
 int main(int argc, const char **argv, const char **envp)
 {
-    int serial;      // [esp+2Ch] [ebp-24h] BYREF
-    char login[28];  // [esp+30h] [ebp-20h] BYREF
-    unsigned int v6; // [esp+4Ch] [ebp-4h]  ????????????????????????
+    int serial;
+    char login[28];
 
-    v6 = __readgsdword(0x14u);
     puts("***********************************");
     puts("*\t\tlevel06\t\t  *");
     puts("***********************************");
